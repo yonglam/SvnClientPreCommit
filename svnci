@@ -1,0 +1,13 @@
+#!/bin/sh
+
+v=$(svn diff | grep -i -e '^\+.*//.*@test' -e '^\+.*/\*.*@test')
+
+if [ "x$v" != "x" ]
+then
+	echo "\033[31m Commit Failed! *** Reason: Test codes are added! *** \033[0m"
+    echo "$v"
+    exit
+fi
+echo "\033[36m Pre-commit checked OK. Start commit... \033[0m"
+
+svn ci "$@"
